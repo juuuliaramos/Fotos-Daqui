@@ -7,11 +7,16 @@ body {
 }
 
 #img {
-  width: 50%;
+  width: 70%;
   height: 50%;
   border: 2px solid black;
   margin-top: 10%;
   background-color: white;
+}
+
+#image {
+  height: 100%;
+  width: 100%;
 }
 
 .btt {

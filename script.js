@@ -2,7 +2,7 @@ let img = document.getElementById("image");
 let latitude = 0;
 let longitude = 0;
 let input = document.getElementById("input");
-let textArea = input.value;
+let textArea = "cachorro";
 let index = 0;
 //let myArr = [];
 
@@ -12,11 +12,11 @@ function geoFindMe(textArea) {
     latitude = position.coords.latitude;
     longitude = position.coords.longitude;
     //console.log(latitude);
-    flickr(latitude, longitude);
+    flickr(latitude, longitude, textArea);
   }
 
   //pelo fetch envia para o link e recebe a promise. Depois já cria o array com os link e pega uma imagem
-  function flickr(latitude, longitude) {
+  function flickr(latitude, longitude, textArea) {
     fetch(
       `https://www.flickr.com/services/rest/?api_key=ba599f6e09e26bb416823156b39066b9&format=json&nojsoncallback=1&method=flickr.photos.search&safe_search=1&per_page=5&lat=${latitude}lon=${longitude}&text=${textArea}`
     )
@@ -30,7 +30,7 @@ function geoFindMe(textArea) {
           res.push(i);
         });
         let imageURL = constructImageURL(param.photos.photo[index]);
-        imageURL.src = imageURL;
+        img.src = imageURL;
         console.log(imageURL);
       });
   }
