@@ -1,12 +1,16 @@
 let img = document.getElementById("image");
+let bttFindMe = document.getElementById("find-me");
+let bttPrev = document.getElementById("previous");
+let bttNext = document.getElementById("next");
+
 let latitude = 0;
 let longitude = 0;
-let input = document.getElementById("input");
-let textArea = "cachorro";
 let index = 0;
-//let myArr = [];
 
-function geoFindMe(textArea) {
+function geoFindMe() {
+  let input = document.getElementById("input");
+  let textArea = input.value;
+  console.log(textArea);
   //pega a localização e chama a função que faz o fetch()
   function success(position) {
     latitude = position.coords.latitude;
@@ -23,7 +27,7 @@ function geoFindMe(textArea) {
       .then((result) => result.json())
       .then((param) => {
         let myArr = param.photos.photo;
-        //console.log(myArr);
+        console.log(myArr);
         let res = [];
         myArr.map((x) => {
           let i = constructImageURL(x);
@@ -31,7 +35,7 @@ function geoFindMe(textArea) {
         });
         let imageURL = constructImageURL(param.photos.photo[index]);
         img.src = imageURL;
-        console.log(imageURL);
+        //console.log(imageURL);
       });
   }
 
@@ -53,7 +57,6 @@ function geoFindMe(textArea) {
       ".jpg"
     );
   }
-
   //seta latitude e longitude se o usuário não liberar ou chama a função success
   if (!navigator.geolocation) {
     latitude = 36.4766;
@@ -64,26 +67,20 @@ function geoFindMe(textArea) {
   }
 }
 
-window.onload = geoFindMe();
+function prev() {
+  if (index > 0) {
+    index -= 1;
+    geoFindMe();
+  }
+}
 
-// const imageUrl = constructImageURL(response.photos.photo[0]);
-// console.log(imageUrl);
+function next() {
+  if (index < 5) {
+    index += 1;
+    geoFindMe();
+  }
+}
 
-// var myImage = document.querySelector("img");
-
-// fetch(`flickr.com/services/rest/?api_key=ba599f6e09e26bb416823156b39066b9&format=json&nojsoncallback=1&method=flickr.photos.search&safe_search=1&per_page=5&lat=${latitude}lon=${longitude}&text=${textArea}`)
-//   .then(function (response) {
-//     return response.blob();
-//   })
-//   .then(function (myBlob) {
-//     var objectURL = URL.createObjectURL(myBlob);
-//     myImage.src = objectURL;
-//   });
-
-//Obter a localização geográfica
-//Construir a URL de consulta
-//Usar o fetch para enviar a solicitação ao Flickr
-//Processar os dados de resposta em um objeto
-//Usar os valores do objeto de resposta para construir uma URL de fonte de imagens
-//Exibir a primeira imagem na página
-//Em resposta a algum evento (por exemplo, um clique ou um setInterval), exibir a próxima imagem da coleção
+bttFindMe.addEventListener("click", geoFindMe);
+bttPrev.addEventListener("click", prev);
+bttNext.addEventListener("click", next);
