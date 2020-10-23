@@ -28,3 +28,9 @@ body {
   background-color: crimson;
   color: white;
 }
+
+@media(max-width: 700px) {
+
+h1{font-size: 80%;}
+
+} 
